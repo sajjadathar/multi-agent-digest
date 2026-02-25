@@ -5,6 +5,6 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-COPY app.py .
+COPY . .
 
 CMD ["python", "app.py"]

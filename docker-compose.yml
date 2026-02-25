@@ -6,6 +6,7 @@ services:
     container_name: agent_ingestor
     volumes:
       - ./data:/data
+      - ./output:/output
     restart: "no"
 
   summarizer:
@@ -18,6 +19,7 @@ services:
         condition: service_completed_successfully
     volumes:
       - ./data:/data
+      - ./output:/output
     deploy:
       resources:
         limits:
@@ -32,6 +34,7 @@ services:
         condition: service_completed_successfully
     volumes:
       - ./data:/data
+      - ./output:/output
     restart: "no"
 
   formatter:

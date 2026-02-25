@@ -2,12 +2,30 @@ import os
 import logging
 import time
 from openai import OpenAI, RateLimitError, APIError
+import json
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
-)
+class JSONFormatter(logging.Formatter):
+    def format(self, record):
+        return json.dumps({
+            "timestamp": self.formatTime(record),
+            "level": record.levelname,
+            "agent": record.name,
+            "message": record.getMessage(),
+        })
+
 logger = logging.getLogger("summarizer")
+logger.setLevel(logging.INFO)
+
+stream_handler = logging.StreamHandler()
+file_handler = logging.FileHandler("/output/logs.json", mode="a")
+
+formatter = JSONFormatter()
+
+stream_handler.setFormatter(formatter)
+file_handler.setFormatter(formatter)
+
+logger.addHandler(stream_handler)
+logger.addHandler(file_handler)
 
 INPUT_FILE = "/data/ingested.txt"
 OUTPUT_FILE = "/data/summary.txt"

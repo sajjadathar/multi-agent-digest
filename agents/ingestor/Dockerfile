@@ -12,6 +12,6 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # Copy only what you need
-COPY app.py .
+COPY . .
 
 CMD ["python", "app.py"]
